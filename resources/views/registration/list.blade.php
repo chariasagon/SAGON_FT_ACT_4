@@ -14,7 +14,7 @@
     <table class="table table-bordered mt-3">
         <thead>
             <tr>
-                <!-- <th>Encrypted ID</th> -->
+                <th>Encrypted ID</th>
                 <th>Username</th>
                 <th>First Name</th>
                 <th>Last Name</th>
@@ -24,7 +24,7 @@
         <tbody>
             @foreach($users as $user)
             <tr>
-                <!-- <td>{{ Crypt::encryptString($user->id) }}</td>  -->
+                <td>{{ Crypt::encryptString($user->id) }}</td> 
                 <td>{{ $user->username }}</td>
                 <td>{{ $user->first_name }}</td>
                 <td>{{ $user->last_name }}</td>
@@ -34,7 +34,7 @@
                     <a href="#" class="btn btn-primary btn-sm"
                        data-bs-toggle="modal"
                        data-bs-target="#editUserModal"
-                    {{--  data-user-id="{{Crypt::encryptString($user->id)}}" --}}
+                       data-user-id="{{Crypt::encryptString($user->id)}}"
                        data-username="{{ $user->username }}"
                        data-firstname="{{ $user->first_name }}"
                        data-lastname="{{ $user->last_name }}">
