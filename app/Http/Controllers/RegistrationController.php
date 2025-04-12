@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Crypt;
+use Exception;
 class RegistrationController extends Controller
 {
     
@@ -67,4 +68,37 @@ class RegistrationController extends Controller
             return response()->json(['error' => $e->getMessage()], 400);
         }
     }
-}    
+  
+
+    public function update(Request $request)
+    {
+        try {
+            // Check if ID is empty
+            if (empty($request->id)) {
+                throw new Exception("Empty ID");
+            }
+    
+            // Decrypt the ID
+            $id = Crypt::decryptString($request->id);
+            
+            // Find the user by decrypted ID
+            $user = User::find($id);
+    
+            // If user not found
+            if (!$user) {
+                return response()->json(['error' => 'User not found.'], 404);
+            }
+    
+            // Proceed with the update logic (make sure you're updating valid fields)
+            $user->username   = $request->username;
+            $user->first_name = $request->first_name;
+            $user->last_name  = $request->last_name;
+            $user->save();
+    
+            return redirect()->route('registration.list')->with('success', 'User updated successfully!');
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Failed to update user. ' . $e->getMessage()], 400);
+        }
+    }
+}   
+    

@@ -93,7 +93,7 @@ Route::get('auth/{provider}/callback', [SocialAuthController::class, 'callback']
 // Protected Dashboard Route (Requires Authentication)
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
 
-Route::get('/registration/list', [RegistrationController::class, 'list'])->name('registration.list');
+// Route::get('/registration/list', [RegistrationController::class, 'list'])->name('registration.list');
 
 
 //END 
@@ -159,3 +159,14 @@ Route::get('/form/layouts-horizontal', [HorizontalForm::class, 'index'])->name('
 
 // tables
 Route::get('/tables/basic', [TablesBasic::class, 'index'])->name('tables-basic');
+
+
+
+
+//ADDED THIS
+Route::group(['prefix' => 'registration'], function () {
+    Route::get('/list', [App\Http\Controllers\RegistrationController::class, 'list'])->name('registration.list');//explain this on chat gpt kais ag wla -'>name nag error not definedlike ganito Route [students.list] not defined.
+    Route::put('/update', [App\Http\Controllers\RegistrationController::class, 'update'])->name('registration.update');
+    
+
+});
