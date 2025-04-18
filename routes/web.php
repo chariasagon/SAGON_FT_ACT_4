@@ -7,12 +7,11 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
-use App\Http\Controllers\RegistrationController; // ADD THIS REGISTER CONTROLLER
-use App\Http\Controllers\AuthController; // ADD THIS FOR LODIN CONTROLLER LOGIC
-use App\Http\Controllers\DashboardController; //this also is added
+use App\Http\Controllers\RegistrationController; 
+use App\Http\Controllers\AuthController; //This is my login controller
+use App\Http\Controllers\DashboardController; 
 
-use App\Http\Controllers\SocialAuthController; //this also is added
-
+use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\dashboard\Analytics;
 use App\Http\Controllers\layouts\WithoutMenu;
 use App\Http\Controllers\layouts\WithoutNavbar;
@@ -59,8 +58,7 @@ use App\Http\Controllers\tables\Basic as TablesBasic;
 // Main Page Route
 Route::get('/', [Analytics::class, 'index'])->name('dashboard-analytics')->middleware('auth');
 
-//START
-//Regisration  Added THIS ALSO
+//Regisration 
 Route::get('/register', [RegistrationController::class, 'showForm']);
 Route::post('/register', [RegistrationController::class, 'register'])->name('register');
 
@@ -73,9 +71,15 @@ Route::get('/logout', function (Request $request) {
 });
 
 
-// Login Routes // ADD THIS ASLO
+// Login Routes 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/ajax/login', [AuthController::class, 'login'])->name('ajax.login');
+
+
+
+Route::post('/ajax/login', [AuthController::class, 'login'])
+->middleware('throttle:login')
+->name('ajax.login');
+
 // Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::post('logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');

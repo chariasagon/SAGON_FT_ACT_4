@@ -60,9 +60,10 @@ class AuthController extends Controller
                     'details' => 'User successfully logged in.',
                 ]);
 
+                // Redirect to the analytics dashboard after successful login
                 return response()->json([
                     'message' => 'Login successful',
-                    'redirect' => route('dashboard-analytics') 
+                    'redirect' => route('dashboard-analytics') // Use the updated route here
                 ], 200);
             }
 
@@ -75,7 +76,7 @@ class AuthController extends Controller
                 'details' => 'Failed login attempt for username: ' . $request->email,
             ]);
 
-
+            // Return invalid credentials message if authentication fails
             return response()->json(['message' => 'Invalid username or password'], 401);
 
         } catch (\Exception $e) {
